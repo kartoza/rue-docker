@@ -1,0 +1,3 @@
+[submodule "rue-api"]
+	path = rue-api
+	url = git@github.com:kartoza/rue-api.git

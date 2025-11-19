@@ -1,0 +1,54 @@
+version: "3.8"
+
+volumes:
+  volumes:
+  redis-data:
+
+x-common-api:
+  &default-common-api
+  image: rue-api:latest
+  build:
+    context: ../
+    dockerfile: deployment/api/Dockerfile
+    target: prod
+  env_file:
+    - .env
+  volumes:
+    - volumes:/app/volumes
+  restart: on-failure
+
+services:
+  api:
+    <<: *default-common-api
+    container_name: rue-api
+    ports:
+      - "8000:8000"
+    depends_on:
+      - worker
+  worker:
+    <<: *default-common-api
+    container_name: rue-worker
+    command: celery -A app.celery_app.celery worker --loglevel=info
+    depends_on:
+      - redis
+  flower:
+    <<: *default-common-api
+    container_name: rue-flower
+    command: celery -A app.celery_app.celery flower --port=5555
+    ports:
+      - "8005:5555"
+    depends_on:
+      - redis
+  redis:
+    image: redis:7
+    container_name: rue-redis
+    command: [
+      "redis-server",
+      "--appendonly", "yes",
+      "--appendfilename", "appendonly.aof",
+      "--requirepass", "${REDIS_PASSWORD:-redis_password}"
+    ]
+    environment:
+      - REDIS_PASSWORD=${REDIS_PASSWORD:-redis_password}
+    volumes:
+      - redis-data:/data
