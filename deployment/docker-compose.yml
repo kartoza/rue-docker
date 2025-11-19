@@ -52,3 +52,16 @@ services:
       - REDIS_PASSWORD=${REDIS_PASSWORD:-redis_password}
     volumes:
       - redis-data:/data
+  ui:
+    build:
+      context: ../
+      dockerfile: deployment/ui/Dockerfile
+      target: prod
+      args:
+        VITE_API_URL: ${VITE_API_URL}
+        VITE_MAPBOX_TOKEN: ${VITE_MAPBOX_TOKEN}
+    image: rue-ui:latest
+    container_name: rue-ui
+    ports:
+      - "80:80"
+    restart: always

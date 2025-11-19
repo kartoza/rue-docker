@@ -18,7 +18,7 @@ up:
 	@echo "------------------------------------------------------------------"
 	@echo "Running in production mode"
 	@echo "------------------------------------------------------------------"
-	@docker compose up -d api flower
+	@docker compose up -d api ui flower
 
 dev:
 	@echo
@@ -26,6 +26,13 @@ dev:
 	@echo "Running in production mode"
 	@echo "------------------------------------------------------------------"
 	@docker compose up -d api-dev flower
+
+dev-ui:
+	@echo
+	@echo "------------------------------------------------------------------"
+	@echo "Running in production mode"
+	@echo "------------------------------------------------------------------"
+	@docker compose up -d ui-dev
 
 down:
 	@echo

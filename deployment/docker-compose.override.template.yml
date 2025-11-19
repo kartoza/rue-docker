@@ -14,7 +14,7 @@ services:
       - ./volumes:/app/volumes
       - ../rue-api/app:/app/app
   api-dev:
-    image: rue-api-dev:latest
+    image: rue-api:dev
     build:
       context: ../
       dockerfile: deployment/api/Dockerfile
@@ -30,3 +30,17 @@ services:
       - ../rue-api/app:/app/app
     depends_on:
       - worker
+  ui-dev:
+    build:
+      context: ../
+      dockerfile: deployment/ui/Dockerfile
+      target: dev
+    image: rue-ui:dev
+    volumes:
+      - ../rue-ui:/app
+    container_name: rue-ui-dev
+    command: sh -c "npm install --verbose && npm run dev"
+    ports:
+      - "8002:5173"
+    env_file:
+      - .env

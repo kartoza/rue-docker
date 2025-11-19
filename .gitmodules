@@ -1,3 +1,6 @@
 [submodule "rue-api"]
 	path = rue-api
-	url = git@github.com:kartoza/rue-api.git
+	url = https://github.com/kartoza/rue-api.git
+[submodule "rue-ui"]
+	path = rue-ui
+	url = https://github.com/kartoza/rue-ui.git
