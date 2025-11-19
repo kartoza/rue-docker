@@ -1,4 +1,4 @@
-n# Rue Application
+# Rue Application
 
 A full-stack application with FastAPI backend and React frontend, containerized with Docker.
 
