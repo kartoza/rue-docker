@@ -8,31 +8,23 @@ RUN echo "deb [signed-by=/etc/apt/keyrings/nodesource.gpg] https://deb.nodesourc
 RUN apt-get update && apt-get install nodejs -y && apt-get install -y git
 
 # Install rue-ui without pip-installing GDAL
-RUN git clone https://github.com/kartoza/rue-ui.git /app
-
-# ENV
-ARG VITE_API_URL
-ARG VITE_MAPBOX_TOKEN
-
-ENV VITE_API_URL=$VITE_API_URL
-ENV VITE_MAPBOX_TOKEN=$VITE_MAPBOX_TOKEN
+RUN git clone --branch updates --single-branch https://github.com/kartoza/rue-ui.git /app
 
 WORKDIR /app
 
 RUN npm install
-RUN npm run build
 
-# Deploy build to nginx
-RUN rm -rf /usr/share/nginx/html/* && \
-    cp -r dist/* /usr/share/nginx/html/
-
-
+# Copy nginx config
 COPY deployment/ui/default.conf /etc/nginx/conf.d/default.conf
+
+# Copy entrypoint script
+COPY deployment/ui/entrypoint.sh /entrypoint.sh
+RUN chmod +x /entrypoint.sh
 
 # Expose nginx port
 EXPOSE 80
 
-CMD ["nginx", "-g", "daemon off;"]
+ENTRYPOINT ["/entrypoint.sh"]
 
 # ============================
 # DEV

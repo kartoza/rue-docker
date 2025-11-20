@@ -40,7 +40,7 @@ services:
     depends_on:
       - redis
   redis:
-    image: redis:7
+    image: redis:8.4
     container_name: rue-redis
     command: [
       "redis-server",
@@ -57,9 +57,8 @@ services:
       context: ../
       dockerfile: deployment/ui/Dockerfile
       target: prod
-      args:
-        VITE_API_URL: ${VITE_API_URL}
-        VITE_MAPBOX_TOKEN: ${VITE_MAPBOX_TOKEN}
+    env_file:
+      - .env
     image: rue-ui:latest
     container_name: rue-ui
     ports:
