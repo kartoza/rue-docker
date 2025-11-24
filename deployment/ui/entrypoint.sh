@@ -3,10 +3,11 @@ set -e
 
 echo "Building rue-ui with environment variables..."
 echo "VITE_API_URL: ${VITE_API_URL}"
-echo "VITE_MAPBOX_TOKEN: ${VITE_MAPBOX_TOKEN:0:10}..." # Only show first 10 chars of token
+echo "VITE_MAPBOX_TOKEN: ${VITE_MAPBOX_TOKEN}" # Only show first 10 chars of token
 
 # Build the application using environment variables
 cd /app
+npm install
 npm run build
 
 # Deploy build to nginx
