@@ -1,0 +1,23 @@
+name: Docker Image CI
+
+on:
+  push:
+    branches: [ "main" ]
+  pull_request:
+    branches: [ "main" ]
+
+jobs:
+
+  build:
+
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v4
+    - name: Build the rue-api docker image
+      run: docker build . --file deployment/api/Dockerfile --tag rue-api:$(date +%s)
+    
+    - name: Build the rue-ui docker image
+      run: docker build . --file deployment/ui/Dockerfile --tag rue-ui:$(date +%s)
+
+    
