@@ -15,4 +15,6 @@ jobs:
     steps:
     - uses: actions/checkout@v4
     - name: Build the rue-api docker image
-      run: docker build deployment/api --file Dockerfile --tag rue-api:$(date +%s)
+      run: docker build . \
+        --file deployment/api/Dockerfile \
+        --tag rue-api:$(date +%s)
