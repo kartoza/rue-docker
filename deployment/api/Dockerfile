@@ -10,7 +10,7 @@ RUN apt-get install -y g++ gdal-bin libgdal-dev python3-gdal
 RUN export GDAL_VERSION=$(gdal-config --version)
 
 # Install rue-lib without pip-installing GDAL
-RUN git clone https://github.com/kartoza/rue-api.git /app
+RUN git clone --branch updates --single-branch https://github.com/kartoza/rue-api.git /app
 
 WORKDIR /app
 
@@ -22,6 +22,7 @@ ENV PYTHONPATH=/app
 EXPOSE 8000
 
 CMD alembic upgrade head && \
+    ./scripts/prestart.sh && \
     uvicorn app.main:app --host 0.0.0.0 --port 8000
 
 # ============================

@@ -8,7 +8,7 @@ RUN echo "deb [signed-by=/etc/apt/keyrings/nodesource.gpg] https://deb.nodesourc
 RUN apt-get update && apt-get install nodejs -y && apt-get install -y git
 
 # Install rue-ui without pip-installing GDAL
-RUN git clone https://github.com/kartoza/rue-ui.git /app
+RUN git clone --branch updates --single-branch https://github.com/kartoza/rue-ui.git /app
 
 WORKDIR /app
 
