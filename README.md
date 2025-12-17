@@ -217,3 +217,11 @@ git submodule update --init --recursive
 ### Redis Connection Issues
 
 Ensure the REDIS_PASSWORD in your `.env` file matches the password in docker-compose.yml.
+
+### Rebuilding
+
+To rebuild all containers after rue API, rue UI or rue LIB has been updated:
+
+```bash
+make rebuild-up
+``` 

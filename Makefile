@@ -11,7 +11,7 @@ build:
 	@echo "------------------------------------------------------------------"
 	@echo "Building in production mode"
 	@echo "------------------------------------------------------------------"
-	@docker compose build
+	@docker compose build --no-cache
 
 up:
 	@echo
@@ -40,3 +40,17 @@ down:
 	@echo "Removing production instance!!! "
 	@echo "------------------------------------------------------------------"
 	@docker compose down
+
+delete-images: down
+	@echo
+	@echo "------------------------------------------------------------------"
+	@echo "Removing images "
+	@echo "------------------------------------------------------------------"
+	@docker rmi -f rue-ui
+	@docker rmi -f rue-api
+
+rebuild-up: delete-images build up
+	@echo
+	@echo "------------------------------------------------------------------"
+	@echo "Rebuild"
+	@echo "------------------------------------------------------------------"
